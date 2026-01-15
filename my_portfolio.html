@@ -1,0 +1,873 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Colorful Portfolio</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<!-- Bootstrap -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+<!-- Font Awesome -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+<!-- AOS -->
+<link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+<style>
+/* ===== THEME ===== */
+:root {
+  --bg: #0f0c29;
+  --bg2: #302b63;
+  --bg3: #24243e;
+  --card: rgba(255,255,255,0.12);
+  --text: #ffffff;
+  --accent: #ffcc70;
+}
+
+.light {
+  --bg: #fdfbfb;
+  --bg2: #ebedee;
+  --bg3: #ffffff;
+  --card: rgba(0,0,0,0.05);
+  --text: #000;
+}
+
+body {
+  background: linear-gradient(135deg, var(--bg), var(--bg2), var(--bg3));
+  color: var(--text);
+  font-family: 'Segoe UI', sans-serif;
+  transition: 0.4s;
+}
+
+/* ===== NAVBAR ===== */
+/* ===== Glass Navbar ===== */
+.glass-nav {
+  position: fixed;
+  top: 15px;
+  width: 100%;
+  padding: 12px 0;
+  backdrop-filter: blur(14px);
+  background: rgba(255, 255, 255, 0.08);
+  box-shadow: 0 10px 35px rgba(0, 0, 0, 0.25);
+  z-index: 1030;
+}
+
+/* ===== Glass Pill Menu ===== */
+.glass-menu {
+  display: flex;
+  flex-wrap: wrap;
+  background: rgba(255, 255, 255, 0.12);
+  border-radius: 50px;
+  box-shadow: inset 0 0 12px rgba(255, 255, 255, 0.15);
+  gap: 10px;
+  padding: 8px 12px;
+  justify-content: center;
+}
+
+/* ===== Nav Links ===== */
+.glass-menu .nav-link {
+  color: #fff;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 14px;
+  border-radius: 30px;
+  font-size: 14px;
+  transition: all 0.3s ease;
+}
+
+.glass-menu .nav-link i {
+  font-size: 14px;
+}
+
+/* Hover & Active State */
+.glass-menu .nav-link:hover,
+.glass-menu .nav-link.active {
+  background: linear-gradient(45deg, #ff512f, #dd2476);
+  box-shadow: 0 0 14px rgba(255, 152, 0, 0.6);
+  color: #fff;
+}
+
+/* ===== Toggle Button ===== */
+.glass-toggler {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: none;
+  background: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(10px);
+  display: none; /* hidden on desktop */
+  flex-direction: column;
+  justify-content: left;
+  gap: 5px;
+  z-index: 1050;
+}
+
+.glass-toggler span {
+  width: 22px;
+  height: 2px;
+  background: #fff;
+  margin: auto;
+  transition: 0.3s;
+}
+
+/* ===== Mobile Styles ===== */
+@media (max-width: 991px) {
+  /* Show toggle button */
+  .glass-toggler {
+    display: flex;
+  }
+
+  /* Collapse menu slide animation */
+  .navbar-collapse {
+    position: absolute;
+    top: 70px;
+    left: 50%;
+    transform: translateX(-50%) translateY(-20px);
+    opacity: 0;
+    pointer-events: none;
+    transition: all 0.4s ease;
+    width: 90%;
+  }
+
+  .navbar-collapse.show {
+    transform: translateX(-50%) translateY(0);
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  /* Vertical glass menu */
+  .glass-menu {
+    flex-direction: column;
+    align-items: center;
+    background: rgba(255, 255, 255, 0.12);
+    backdrop-filter: blur(16px);
+    border-radius: 20px;
+    padding: 20px;
+  }
+
+  .glass-menu .nav-link {
+    width: 100%;
+    text-align: center;
+    padding: 12px 0;
+  }
+}
+
+
+.neon-text {
+  color: #ffcc70 !important;
+  text-shadow: 0 0 10px #ffcc70;
+}
+
+.hero-section {
+  background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+  color: white;
+}
+
+.hero-title {
+  font-size: 3rem;
+  font-weight: bold;
+}
+
+.hero-title span {
+  color: #ffcc70;
+  text-shadow: 0 0 15px #ffcc70;
+}
+
+.gradient-text {
+  position: relative;
+  font-weight: 700;
+  background: linear-gradient(45deg, #ff512f, #dd2476);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Shadow layer */
+.gradient-text::after {
+  content: attr(data-text);
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: -1;
+  color: #000;
+  filter: blur(6px);
+  opacity: 0.5;
+}
+
+
+.glow-btn {
+  background: linear-gradient(45deg, #ff512f, #dd2476);
+  border: none;
+  padding: 12px 28px;
+  border-radius: 30px;
+  box-shadow: 0 0 25px #ff512f;
+  color: white;
+}
+
+.blob {
+  width: 320px;
+  height: 320px;
+  background: linear-gradient(45deg, #ff512f, #dd2476);
+  border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: blobMove 6s infinite alternate;
+}
+
+.blob img {
+    height: 190px;
+  width: 220px;
+  border-radius: 50%;
+  border: 5px solid white;
+}
+
+@keyframes blobMove {
+  0% { border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%; }
+  100% { border-radius: 40% 60% 70% 30% / 40% 70% 30% 60%; }
+}
+
+
+.glow-btn {
+  background: linear-gradient(45deg, #ff512f, #dd2476);
+  color: white;
+  border: none;
+  padding: 12px 25px;
+  border-radius: 30px;
+  box-shadow: 0 0 20px #ff512f;
+}
+
+/* ===== GLASS CARD ===== */
+
+.glass-card {
+  background: rgba(255,255,255,0.12);
+  backdrop-filter: blur(15px);
+  border-radius: 20px;
+  padding: 30px;
+  text-align: center;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+  transition: 0.3s;
+}
+
+.glass-card:hover {
+  transform: translateY(-10px) scale(1.03);
+}
+
+
+/* ===== SKILLS ===== */
+.glass-skill {
+  background: rgba(255,255,255,0.12);
+  backdrop-filter: blur(14px);
+  border-radius: 20px;
+  padding: 30px 15px;
+  transition: 0.4s;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.25);
+  cursor: pointer;
+}
+
+.glass-skill i {
+  font-size: 42px;
+  margin-bottom: 12px;
+}
+
+.glass-skill h5 {
+  margin-top: 10px;
+  font-weight: 600;
+}
+
+.glass-skill:hover {
+  transform: translateY(-12px) scale(1.05);
+  box-shadow: 0 0 30px rgba(255, 204, 112, 0.6);
+}
+
+/* Glass Modal */
+.glass-project {
+  background: rgba(255,255,255,0.08);
+  backdrop-filter: blur(18px);
+  border-radius: 24px;
+  box-shadow: 0 30px 60px rgba(0,0,0,0.6);
+  color: #fff;
+}
+
+/* Image hover */
+.project-img img {
+  transition: 0.4s ease;
+}
+.project-img img:hover {
+  transform: scale(1.05);
+}
+
+/* Description */
+.project-desc {
+  font-size: 15px;
+  opacity: 0.9;
+}
+
+/* Tech stack */
+.tech-stack {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.tech-stack span {
+  background: rgba(255,255,255,0.12);
+  padding: 8px 14px;
+  border-radius: 30px;
+  font-size: 13px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+/* Buttons */
+.project-buttons {
+  display: flex;
+  gap: 15px;
+  flex-wrap: wrap;
+}
+
+.btn-live {
+  background: linear-gradient(135deg, #00c6ff, #0072ff);
+  color: #fff;
+  border-radius: 30px;
+  padding: 10px 20px;
+  transition: 0.3s;
+}
+
+.btn-git {
+  background: linear-gradient(135deg, #ff512f, #dd2476);
+  color: #fff;
+  border-radius: 30px;
+  padding: 10px 20px;
+  transition: 0.3s;
+}
+
+.btn-live:hover,
+.btn-git:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 25px rgba(255,255,255,0.3);
+}
+
+/* ===== PROJECT ===== */
+.project-card{
+  background:var(--card);
+  padding:20px;
+  border-radius:20px;
+  cursor:pointer;
+  transition:0.4s;
+}
+.project-card:hover{
+  transform:translateY(-10px);
+  box-shadow:0 0 20px var(--neon);
+}
+.glass{
+  background:rgba(255,255,255,0.12);
+  backdrop-filter:blur(18px);
+  color:white;
+}
+body.light .glass{
+  background:white;
+  color:black;
+}
+/* ================= SKILL ICONS ================= */
+.skills-icons img{
+  width:26px;
+  margin-right:8px;
+  filter:invert(1);
+}
+body.light .skills-icons img{
+  filter:none;
+}
+
+
+/* Contact Section */
+.contact-section {
+  background: linear-gradient(135deg,#302b63,#24243e, #0f0c29);
+ }
+
+/* Glass Box */
+.glass-contact {
+  padding: 50px 35px;
+  border-radius: 24px;
+ background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+ 
+  box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+  text-align: center;
+}
+
+/* Cards Grid */
+.contact-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 20px;
+}
+
+/* Contact Card */
+.contact-card {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 18px 20px;
+  border-radius: 16px;
+  text-decoration: none;
+  background: rgba(255,255,255,0.12);
+  color: #fff;
+  transition: all 0.4s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.contact-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, #ff512f, #dd2476);
+  opacity: 0;
+  transition: 0.4s;
+}
+
+.contact-card:hover::before {
+  opacity: 0.9;
+}
+
+.contact-card * {
+  position: relative;
+  z-index: 2;
+}
+
+.contact-card i {
+  font-size: 28px;
+}
+
+/* Text */
+.contact-card span {
+  font-size: 14px;
+  opacity: 0.8;
+}
+
+.contact-card p {
+  margin: 0;
+  font-weight: 600;
+}
+
+/* Hover */
+.contact-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 15px 30px rgba(255,81,47,0.5);
+}
+/* ================= CURSOR ================= */
+.cursor{
+  width:18px;
+  height:18px;
+  background:var(--neon);
+  border-radius:50%;
+  position:fixed;
+  pointer-events:none;
+  mix-blend-mode:difference;
+  z-index:9999;
+}
+
+
+
+</style>
+</head>
+
+<body>
+<div class="cursor"></div>
+
+<!-- GLASS ICON NAVBAR -->
+<nav class="navbar fixed-top glass-nav navbar-expand-lg">
+  <div class="container position-relative justify-content-center">
+
+    <!-- Mobile Toggle -->
+    <!-- <button class="navbar-toggler  glass-toggler d-lg-none"
+            type="button"  
+            data-bs-target="#glassMenu"
+            aria-controls="glassMenu"
+            aria-expanded="false"
+            aria-label="Toggle navigation">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button> -->
+
+    <!-- Menu -->
+    <div class="collapse navbar-collapse justify-content-center" id="glassMenu">
+      <ul class="navbar-nav glass-menu flex-column flex-lg-row gap-3 px-3 py-2">
+
+        <li class="nav-item">
+          <a class="nav-link" href="#hero"  data-bs-target="#glassMenu">
+            <i class="fas fa-house"></i><span> Home</span>
+          </a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link" href="#about"  data-bs-target="#glassMenu">
+            <i class="fas fa-user"></i><span> About</span>
+          </a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link" href="#skills"  data-bs-target="#glassMenu">
+            <i class="fas fa-code"></i><span> Skills</span>
+          </a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link" href="#projects"  data-bs-target="#glassMenu">
+            <i class="fas fa-laptop-code"></i><span> Projects</span>
+          </a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link" href="#contact"  data-bs-target="#glassMenu">
+            <i class="fas fa-envelope"></i><span> Contact</span>
+          </a>
+        </li>
+
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section id="hero" class="hero-section">
+  <div class="container">
+    <div class="row align-items-center min-vh-100">
+
+      <!-- LEFT -->
+      <div class="col-md-6" data-aos="fade-right">
+        <h1 class="hero-title">
+          Hi, I'm <span>Dusang Maya</span>
+        </h1>
+        <h4 class="gradient-text">Creative Web Developer</h4>
+
+        <p class="mt-3">
+          I design & build beautiful websites with modern UI, animations
+          and clean code.
+        </p>
+
+        <a href="resume.pdf" download class="btn glow-btn me-2">
+          <i class="fa fa-download"></i> Resume
+        </a>
+        <a href="#contact" class="btn btn-outline-light">
+          Contact Me
+        </a>
+      </div>
+
+      <!-- RIGHT -->
+      <div class="col-md-6 text-center" data-aos="zoom-in">
+        <div class="blob">
+          <img src="https://png.pngtree.com/png-vector/20220901/ourlarge/pngtree-avatar-icon-of-a-female-employee-wearing-suit-going-to-work-png-image_6133929.png" class="img-fluid">
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ABOUT -->
+<section id="about" class="py-5">
+  <div class="container">
+    <h2 class="text-center text-light mb-5 " data-aos="fade-up">
+      About Me
+    </h2>
+
+    <div class="row g-4">
+      <div class="col-md-4" data-aos="fade-up">
+        <div class="glass-card">
+          <i class="fa fa-code fa-2x text-warning"></i>
+          <h5 class="mt-3">Developer</h5>
+          <p>I love writing clean, efficient & scalable code.</p>
+        </div>
+      </div>
+
+      <div class="col-md-4" data-aos="fade-up" data-aos-delay="150">
+        <div class="glass-card">
+          <i class="fa fa-paint-brush fa-2x text-danger"></i>
+          <h5 class="mt-3">Designer</h5>
+          <p>Focused on modern UI, colors & animations.</p>
+        </div>
+      </div>
+
+      <div class="col-md-4" data-aos="fade-up" data-aos-delay="300">
+        <div class="glass-card">
+          <i class="fa fa-rocket fa-2x text-info"></i>
+          <h5 class="mt-3">Learner</h5>
+          <p>Always exploring new technologies & trends.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- SKILLS -->
+<section id="skills" class="py-5">
+  <div class="container">
+    <h2 class="text-center text-light mb-5 " data-aos="fade-up">
+      Skills & Technologies
+    </h2>
+
+    <div class="row g-4 text-center">
+
+      <!-- HTML -->
+      <div class="col-md-3" data-aos="zoom-in">
+        <div class="glass-skill">
+          <i class="fab fa-html5 text-danger"></i>
+          <h5>HTML5</h5>
+        </div>
+      </div>
+
+      <!-- CSS -->
+      <div class="col-md-3" data-aos="zoom-in">
+        <div class="glass-skill">
+          <i class="fab fa-css3-alt text-primary"></i>
+          <h5>CSS3</h5>
+        </div>
+      </div>
+
+      <!-- Bootstrap -->
+      <div class="col-md-3" data-aos="zoom-in">
+        <div class="glass-skill">
+          <i class="fab fa-bootstrap text-info"></i>
+          <h5>Bootstrap</h5>
+        </div>
+      </div>
+
+      <!-- JavaScript -->
+      <div class="col-md-3" data-aos="zoom-in">
+        <div class="glass-skill">
+          <i class="fab fa-js text-warning"></i>
+          <h5>JavaScript</h5>
+        </div>
+      </div>
+
+      <!-- Python -->
+      <div class="col-md-3" data-aos="zoom-in">
+        <div class="glass-skill">
+          <i class="fab fa-python" style="color:#3776AB"></i>
+          <h5>Python</h5>
+        </div>
+      </div>
+
+      <!-- Django -->
+      <div class="col-md-3" data-aos="zoom-in">
+        <div class="glass-skill">
+          <i class="fas fa-leaf text-success"></i>
+          <h5>Django</h5>
+        </div>
+      </div>
+
+      <!-- React -->
+      <div class="col-md-3" data-aos="zoom-in">
+        <div class="glass-skill">
+          <i class="fab fa-react text-info"></i>
+          <h5>React JS</h5>
+        </div>
+      </div>
+
+      <!-- Git -->
+      <div class="col-md-3" data-aos="zoom-in">
+        <div class="glass-skill">
+          <i class="fab fa-git-alt text-danger"></i>
+          <h5>Git</h5>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- PROJECTS -->
+<section id="projects" class="section">
+  <div class="container">
+    <h2 class="text-center mb-5" data-aos="fade-up">Projects</h2>
+
+    <div class="row g-4">
+
+      <!-- Project Card -->
+      <div class="col-md-4" data-aos="zoom-in">
+        <div class="project-card" data-bs-toggle="modal" data-bs-target="#project1">
+          <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSNNntn82UM119MvyVv2oPIJSB1g4TyVtvE_Q&s" class="img-fluid rounded">
+          <h5 class="mt-3">Salon Management System</h5>
+          <p>Appointments, Products & Courses</p>
+
+          <div class="skills-icons">
+            <img src="https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/python.svg">
+            <img src="https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/django.svg">
+            <img src="https://cdn.jsdelivr.net/npm/simple-icons@v9/icons/bootstrap.svg">
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+<div class="modal fade" id="project1" tabindex="-1">
+  <div class="modal-dialog modal-xl modal-dialog-centered">
+    <div class="modal-content glass-project">
+
+      <!-- Header -->
+      <div class="modal-header border-0">
+        <h4 class="modal-title gradient-text">
+          💇‍♀️ Salon Management System
+        </h4>
+        <button class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+      </div>
+
+      <!-- Body -->
+      <div class="modal-body">
+        <div class="row align-items-center g-4">
+
+          <!-- Image -->
+          <div class="col-md-6">
+            <div class="project-img">
+              <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSNNntn82UM119MvyVv2oPIJSB1g4TyVtvE_Q&s"
+                   class="img-fluid rounded-4">
+            </div>
+          </div>
+
+          <!-- Content -->
+          <div class="col-md-6">
+            <p class="project-desc">
+              A complete salon automation system with online appointment booking,
+              beauty product sales, course management, and a powerful admin panel.
+            </p>
+
+            <h6 class="mt-3">Tech Stack</h6>
+            <div class="tech-stack">
+              <span><i class="fab fa-python"></i> Python</span>
+              <span><i class="fas fa-leaf"></i> Django</span>
+              <span><i class="fab fa-bootstrap"></i> Bootstrap</span>
+            </div>
+
+            <!-- Buttons -->
+            <div class="project-buttons mt-4">
+              <a href="https://your-live-project-link.com" target="_blank" class="btn btn-live">
+                <i class="fas fa-eye"></i> Live Preview
+              </a>
+
+              <a href="https://github.com/yourusername/project-repo" target="_blank" class="btn btn-git">
+                <i class="fab fa-github"></i> GitHub
+              </a>
+            </div>
+
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+
+<!-- CONTACT -->
+<!-- CONTACT SECTION -->
+<section id="contact" class="contact-section py-5">
+  <div class="container">
+    <div class="row justify-content-center">
+
+      <div class="col-lg-8" data-aos="zoom-in">
+        <div class="glass-contact">
+
+          <h2 class="gradient-text mb-4">Let’s Connect</h2>
+          <p class="text-light mb-5">
+            Have a project, idea, or collaboration in mind?  
+            I’d love to hear from you.
+          </p>
+
+          <div class="contact-cards">
+
+            <a href="mailto:dusangmaya05@gmail.com" class="contact-card">
+              <i class="fas fa-envelope"></i>
+              <div>
+                <span>Email</span>
+                <p>dusangmaya05@gmail.com</p>
+              </div>
+            </a>
+
+            <a href="https://wa.me/9325873603" target="_blank" class="contact-card">
+              <i class="fab fa-whatsapp"></i>
+              <div>
+                <span>WhatsApp</span>
+                <p>+91 925873603</p>
+              </div>
+            </a>
+
+            <a href="https://github.com/yourusername" target="_blank" class="contact-card">
+              <i class="fab fa-github"></i>
+              <div>
+                <span>GitHub</span>
+                <p>@yourusername</p>
+              </div>
+            </a>
+
+            <a href="https://www.linkedin.com/in/maya-dusang-397834326/" target="_blank" class="contact-card">
+              <i class="fab fa-linkedin"></i>
+              <div>
+                <span>LinkedIn</span>
+                <p>Dusang Maya</p>
+              </div>
+            </a>
+
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="text-center py-3">
+© 2026 Dusang Maya | Colorful Portfolio
+</footer>
+
+
+
+
+<!-- JS -->
+ <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const navLinks = document.querySelectorAll('.navbar-nav .nav-link');
+    const navCollapseEl = document.getElementById('glassMenu');
+
+    // Initialize Bootstrap Collapse
+    const navCollapse = new bootstrap.Collapse(navCollapseEl, { toggle: false });
+
+    navLinks.forEach(link => {
+      link.addEventListener('click', () => {
+        if (navCollapseEl.classList.contains('show')) {
+          navCollapse.hide();
+        }
+      });
+    });
+  });
+
+  /* Spotlight Cursor */
+  const cursor = document.querySelector('.cursor');
+  document.addEventListener('mousemove', e => {
+    cursor.style.left = e.clientX + 'px';
+    cursor.style.top = e.clientY + 'px';
+  });
+
+  // Initialize AOS
+  AOS.init({
+    duration: 1200,
+    once: true
+  });
+</script>
+
+
+</body>
+</html>
